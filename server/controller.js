@@ -14,6 +14,9 @@ module.exports = {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
         const [newUser] = await db.register_user([username, hashedPassword, picture]);
+        req.session.userid = {
+            userid: newUser.id
+        }
         res.status(200).send({
             id: newUser.id,
             username: newUser.username,
@@ -33,6 +36,9 @@ module.exports = {
 
         const authenticated = bcrypt.compareSync(password, user.password);
         if(authenticated){
+            req.session.userid = {
+                userid: user.id
+            }
             return res.status(200).send({
                 id: user.id,
                 username: user.username,
@@ -46,8 +52,10 @@ module.exports = {
 
     getPosts: async (req, res) => {
         const db = req.app.get('db');
-        const {id} = req.params;
+        const {userid} = req.session.userid
+        
         const {userposts, search} = req.query
+        const id = userid
 
         if(userposts === 'true' && search){
             const posts = await db.get_search_and_usersposts([search])
@@ -71,8 +79,8 @@ module.exports = {
     getPost: async (req,res) => {
         const db = req.app.get('db')
         const {id} = req.params
-
         const post = await db.get_post([id])
+        
         return res.status(200).send(post)
     },
 
