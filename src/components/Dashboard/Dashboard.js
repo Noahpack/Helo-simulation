@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
+
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
@@ -89,9 +89,4 @@ getPosts = async () => {
         )    
     }
 }
-function mapStateToProps(state){
-    return{
-        id: state.id
-    }
-}
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard

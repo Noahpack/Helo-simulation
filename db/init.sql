@@ -7,10 +7,9 @@ password TEXT);
 ALTER TABLE users
 ADD COLUMN picture TEXT;
 
-CREATE TABLE post (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(45),
-    img TEXT,
-    content TEXT,
-    author_id INT REFERENCES users(id)
-);
+CREATE TABLE posts 
+(id SERIAL PRIMARY KEY, 
+title VARCHAR(40), 
+content VARCHAR(280), 
+postPicture VARCHAR(200), 
+user_id INT);

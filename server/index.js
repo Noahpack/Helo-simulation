@@ -33,7 +33,11 @@ massive({
 
 app.post('/auth/register', auth.register);
 app.post('/auth/login', auth.login);
+app.post('/form', auth.addPost);
+app.post('/api/auth/logout', auth.logout)
 app.get('/dashboard/posts/:id', auth.getPosts);
 app.get('/post/:id', auth.getPost);
+app.get('/api/auth/me', auth.getMe)
+app.delete('/post/delete/:id', auth.deletePost)
 
 app.listen(SERVER_PORT, ()=>console.log(`Welcome to server ${SERVER_PORT}`));

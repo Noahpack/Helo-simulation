@@ -5,11 +5,18 @@ const initialState = {
 }
 
 const GET_USER_DATA = 'GET_USER_DATA';
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
 
 export const getUserData = (id, username, picture) => {
     return{
         type: GET_USER_DATA,
         payload: {id, username, picture}
+    }
+}
+export const updateUserData = (username, picture) => {
+    return {
+        type: UPDATE_USER_DATA,
+        payload: {username, picture}
     }
 }
 export default function(state = initialState, action){
@@ -20,6 +27,11 @@ export default function(state = initialState, action){
                 username: action.payload.username,
                 picture: action.payload.picture
             }
+            case UPDATE_USER_DATA:
+                return{
+                    username: action.payload.username,
+                    picture: action.payload.picture
+                }
             default:
                 return state;
     }

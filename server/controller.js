@@ -71,10 +71,45 @@ module.exports = {
     getPost: async (req,res) => {
         const db = req.app.get('db')
         const {id} = req.params
+
+        const post = await db.get_post([id])
+        return res.status(200).send(post)
+    },
+
+    addPost: async (req, res) => {
+        const db = req.app.get('db')
+        const {userid} = req.session.userid;
+        const {title, image, content} = req.body
+        const id = userid
+
+        const newPost = await db.add_post([title, content, image, id]);
+        return res.status(200).send(newPost)
+    },
+
+    deletePost: async (req, res) => {
+        const db = req.app.get('db')
+        const {id} = req.params
+        const {userid} = req.session.userid
+        const post = await db.get_post([id])
+
+        if(userid != post[0].id){
+            return res.status(401).send('You can only delete posts that you created')
+        } else {
+            await db.delete_post([id])
+            return res.status(200).send('Deleted')
+        }
     },
     logout: (req, res) => {
         req.session.destroy();
         res.sendStatus(200)
+    },
+    getMe: async (req, res) => {
+        const {userid} = req.session.userid
+       
+        const db = req.app.get('db')
+
+        const me = await db.get_me([userid])
+        return res.status(200).send(me)
     }
    
    
