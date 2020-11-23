@@ -1,9 +1,12 @@
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    profile_pic TEXT,
-    username VARCHAR(20) NOT NULL,
-    password TEXT NOT NULL
-);
+    id SERIAL PRIMARY KEY, 
+is_admin CHAR, 
+username VARCHAR(50), 
+password TEXT);
+
+ALTER TABLE users
+ADD COLUMN picture TEXT;
+
 CREATE TABLE post (
     id SERIAL PRIMARY KEY,
     title VARCHAR(45),
